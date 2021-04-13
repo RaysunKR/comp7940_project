@@ -2,50 +2,111 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
-    <title>Health Genius</title>
-    <style>
-        .card {
-            margin-bottom: 1em;
-        }
-    </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css"
+    integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
+  <title>Health Genius</title>
+  <style>
+    .card {
+      margin-bottom: 1em;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.html">Health Genius</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="bmi.html">BMI Calculator</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="bmr.html">BMR Calculator <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="ree.html">REE Calculator</a>
-              </li>
-            </ul>
-          </div>
-    </nav>
-    <br>
-    <div class="container">
-        
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="index.html">Health Genius</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="bmi.html">BMI Calculator</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="bmr.html">BMR Calculator <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="ree.html">REE Calculator</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h3>BMR Calculator</h3>
+        <p>The BMR index refers to the minimum energy required to maintain life when the body is in a non-digestible
+          state without strenuous activity. Can provide a reference for your healthy weight loss.</p>
+        <hr>
+        <form>
+          <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select class="form-control" id="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" class="form-control" id="age">
+          </div>
+          <div class="form-group">
+            <label for="height">Height(cm):</label>
+            <input type="number" class="form-control" id="height">
+          </div>
+          <div class="form-group">
+            <label for="weight">Weight(kg):</label>
+            <input type="number" class="form-control" id="weight">
+          </div>
+          <button type="button" class="btn btn-primary" id="calculate">Calculate</button>
+        </form>
+        <div class="alert alert-light" role="alert" id="infoshow">
+          Welcome. Please calculate.
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#calculate").click(function () {
+        let h = $("#height").val();
+        let w = $("#weight").val();
+        let a = $("#age").val();
+        let g = $("#gender").val()
+        h = Number(h);
+        w = Number(w);
+        a = Number(a);
+        let bmr = 0;
+        if (g === "male") {
+          bmr = (13.7 * w) + (5 * h) - (6.8 * a) + 66;
+
+        } else {
+          bmr = (9.6 * w) + (1.8 * h) - (4.7 * a) + 655;
+        }
+        bmr = bmr.toFixed(2);
+
+        $("#infoshow").attr("class", "alert alert-success");
+        $("#infoshow").html("Your BMR is <b>" + bmr + "</b> kilocalorie.")
+
+      });
+
+    });
+  </script>
 </body>
 
 </html>
