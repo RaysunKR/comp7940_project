@@ -2,56 +2,107 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
-    <title>Health Genius</title>
-    <style>
-        .card {
-            margin-bottom: 1em;
-        }
-    </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/minty/bootstrap.min.css"
+    integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
+  <title>Health Genius</title>
+  <style>
+    .card {
+      margin-bottom: 1em;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.html">Health Genius</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="bmi.html">BMI Calculator <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="bmr.html">BMR Calculator</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="ree.html">REE Calculator</a>
-              </li>
-            </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="index.html">Health Genius</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="bmi.html">BMI Calculator <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="bmr.html">BMR Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="ree.html">REE Calculator</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h3>BMI Calculator</h3>
+        <p>According to the BMI index, you can know whether your weight is in the normal range.</p>
+        <hr>
+        <form>
+          <div class="form-group">
+            <label for="height">Height(cm):</label>
+            <input type="number" class="form-control" id="height">
           </div>
-    </nav>
-    <br>
-    <div class="container">
-      <div class="card">
-        <div class="card-body">
-          <h3>BMI Calculator</h3>
-          <p>According to the BMI index, you can know whether your weight is in the normal range.</p>
-          
-          <p>Note: BMI does not apply to under 18 years old, athletes, women undergoing weight training, pregnant or lactating, frail or sedentary elderly</p>
+          <div class="form-group">
+            <label for="weight">Weight(kg):</label>
+            <input type="number" class="form-control" id="weight">
+          </div>
+          <button type="button" class="btn btn-primary" id="calculate">Calculate</button>
+        </form>
+        <div class="alert alert-light" role="alert" id="infoshow">
+          Welcome. Please calculate.
         </div>
+        <hr>
+        <p>Note: BMI does not apply to under 18 years old, athletes, women undergoing weight training, pregnant or
+          lactating, frail or sedentary elderly</p>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $("#calculate").click(function () {
+        let h = $("#height").val();
+        let w = $("#weight").val();
+        h = Number(h) / 100;
+        w = Number(w);
+        let bmi = w / (h * h)
+        bmi = bmi.toFixed(2)
+        if (bmi < 18.5) {
+          $("#infoshow").attr("class", "alert alert-warning");
+          $("#infoshow").html("Your BMI is <b>" + bmi + "</b>" + "<br>" + "Your weight is lower than normal.")
+        } else if (bmi >= 18.5 && bmi < 24) {
+          $("#infoshow").attr("class", "alert alert-success");
+          $("#infoshow").html("Your BMI is <b>" + bmi + "</b>" + "<br>" + "Your weight is within the normal weight range.")
+        }else if (bmi >= 24 && bmi < 27) {
+          $("#infoshow").attr("class", "alert alert-warning");
+          $("#infoshow").html("Your BMI is <b>" + bmi + "</b>" + "<br>" + "You are overweight, please pay attention to exercise.")
+        }else if (bmi >= 27 && bmi < 30) {
+          $("#infoshow").attr("class", "alert alert-danger");
+          $("#infoshow").html("Your BMI is <b>" + bmi + "</b>" + "<br>" + "You are already in the state of mild obesity, please start to lose weight.")
+        }else if (bmi >= 30 && bmi < 35) {
+          $("#infoshow").attr("class", "alert alert-danger");
+          $("#infoshow").html("Your BMI is <b>" + bmi + "</b>" + "<br>" + "You are in a moderate obesity state, please strengthen your exercise.")
+        }else if (bmi >= 35) {
+          $("#infoshow").attr("class", "alert alert-danger");
+          $("#infoshow").html("Your BMI is <b>" + bmi + "</b>" + "<br>" + "You are already in a state of severe obesity. You must take your obesity seriously and start to lose weight seriously.")
+        }
+
+      });
+
+    });
+  </script>
 
 </body>
 
