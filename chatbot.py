@@ -160,7 +160,7 @@ def calories(update: Update, context: CallbackContext) -> None:
         # /add keyword <-- this should store the keyword
         msg = context.args[0]
         if msg.strip() =="":
-            update.message.reply_text('Usage: /calories <keyword>')
+            update.message.reply_text('Usage: /calories <keyword>\r\nExample: /calories hamburger')
         else:
             info="The following are the calories of foods related to \"%s\":\r\nSource:National Health Service,the UK & Nutracheck App"%(msg)
             update.message.reply_text(info)
