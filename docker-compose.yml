@@ -1,0 +1,10 @@
+version: '3'
+services:
+  chatbot:
+    image: health_genius
+    depends_on:
+      - html
+  html:
+    image: health_genius_html
+    ports:
+      - "80:80"
